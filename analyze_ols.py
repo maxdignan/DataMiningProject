@@ -55,38 +55,38 @@ for i in range(START_LINE, len(lines)):
 
     predicted_current_bitstamp_price = 385.242 + (0.566143 * (ten_seconds_ago_bitfinex)) + (0.308626 * (fifteen_seconds_ago_bitfinex))
 
-    action_point_bitstamp_price = float(five_seconds_ago_line_ACTION_POINT[2])
+    action_point_bitstamp_price = float(ten_seconds_ago_line[2])
 
     if predicted_current_bitstamp_price > action_point_bitstamp_price:
         if current_actual_bitstamp > action_point_bitstamp_price:
             #true positive
             true_pos += 1
-            greaters_true.append(predicted_current_bitstamp_price - current_actual_bitstamp)
+            greaters_true.append(current_actual_bitstamp - action_point_bitstamp_price)
         else:
             #false positive
             false_pos += 1
-            greaters_false.append(predicted_current_bitstamp_price - current_actual_bitstamp)
+            greaters_false.append(current_actual_bitstamp - action_point_bitstamp_price)
 
-        errors.append(predicted_current_bitstamp_price - current_actual_bitstamp)
-        greaters.append(predicted_current_bitstamp_price - current_actual_bitstamp)
-        perc_greaters.append(100 * (predicted_current_bitstamp_price - current_actual_bitstamp) / action_point_bitstamp_price)
+        errors.append(current_actual_bitstamp - action_point_bitstamp_price)
+        greaters.append(current_actual_bitstamp - action_point_bitstamp_price)
+        perc_greaters.append(100 * (current_actual_bitstamp - action_point_bitstamp_price) / action_point_bitstamp_price)
 
         top.append(current_actual_bitstamp - action_point_bitstamp_price)
     else:
         if current_actual_bitstamp < action_point_bitstamp_price:
             #true negative
             true_neg += 1
-            lessers_true.append(predicted_current_bitstamp_price - current_actual_bitstamp)
+            lessers_true.append(-(current_actual_bitstamp - action_point_bitstamp_price))
         else:
             #false negative
             false_neg += 1
-            lessers_false.append(predicted_current_bitstamp_price - current_actual_bitstamp)
+            lessers_false.append(-(current_actual_bitstamp - action_point_bitstamp_price))
 
-        errors.append(predicted_current_bitstamp_price - current_actual_bitstamp)
-        lessers.append(predicted_current_bitstamp_price - current_actual_bitstamp)
-        perc_lessers.append(100 * (predicted_current_bitstamp_price - current_actual_bitstamp) / action_point_bitstamp_price)
+        errors.append(-(current_actual_bitstamp - action_point_bitstamp_price))
+        lessers.append(-(current_actual_bitstamp - action_point_bitstamp_price))
+        perc_lessers.append(100 * (-(current_actual_bitstamp - action_point_bitstamp_price)) / action_point_bitstamp_price)
 
-        bottom.append(current_actual_bitstamp - action_point_bitstamp_price)
+        bottom.append(-(current_actual_bitstamp - action_point_bitstamp_price))
 
 print("true_pos: " + str(true_pos))
 print("false_pos: " + str(false_pos))
